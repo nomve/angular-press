@@ -1,13 +1,19 @@
 {
-    "name": "gkosutic/angular-press",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Goran Kosutic",
-            "email": "kosutic.goran@gmail.com"
-        }
-    ],
-    "require": {
-        "phpunit/phpunit": "4.8.11"
+  "name": "nomve/angular-press",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Goran Košutić",
+      "email": "kosutic.goran@gmail.com"
     }
+  ],
+  "require": {
+    "phpunit/phpunit": "4.8.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "AngularPress\\": "./source"
+    }
+  }
 }
