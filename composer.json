@@ -9,7 +9,7 @@
     }
   ],
   "require": {
-    "phpunit/phpunit": "4.8.10"
+    "phpunit/phpunit": "4.8.11"
   },
   "autoload": {
     "psr-4": {
