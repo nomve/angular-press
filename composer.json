@@ -7,5 +7,7 @@
             "email": "kosutic.goran@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "phpunit/phpunit": "4.8.11"
+    }
 }
