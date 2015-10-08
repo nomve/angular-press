@@ -1,0 +1,11 @@
+{
+    "name": "gkosutic/angular-press",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Goran Kosutic",
+            "email": "kosutic.goran@gmail.com"
+        }
+    ],
+    "require": {}
+}
