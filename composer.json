@@ -14,7 +14,10 @@
   },
   "autoload": {
     "psr-4": {
-      "AngularPress\\": "./source"
-    }
+      "AngularPress\\": "./source/classes"
+    },
+    "files": [
+      "source/defines.php"
+    ]
   }
 }
