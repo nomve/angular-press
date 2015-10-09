@@ -85,12 +85,8 @@
     </orderEntry>
     <orderEntry type="module-library">
       <library name="PHARS">
-        <CLASSES>
-          <root url="phar://$MODULE_DIR$/phpunit.phar" />
-        </CLASSES>
-        <SOURCES>
-          <root url="phar://$MODULE_DIR$/phpunit.phar" />
-        </SOURCES>
+        <CLASSES />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>

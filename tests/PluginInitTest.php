@@ -29,7 +29,7 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
                 'args' => array(
                     ANGULAR_PRESS_PLUGIN_FILE,
                     array(
-                        'PluginInit',
+                        '\AngularPress\Plugin',
                         'pluginActivation'
                     )
                 ),
@@ -37,6 +37,8 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
         );
 
         require_once ANGULAR_PRESS_PLUGIN_FILE;
+
+        $this->assertTrue( method_exists('\AngularPress\Plugin', 'pluginActivation') );
     }
 
     function testPluginDeactivation() {
@@ -48,7 +50,7 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
                 'args' => array(
                     ANGULAR_PRESS_PLUGIN_DEACTIVATION_FILE,
                     array(
-                        'PluginInit',
+                        '\AngularPress\Plugin',
                         'pluginDeactivation'
                     )
                 ),
@@ -56,6 +58,8 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
         );
 
         require_once ANGULAR_PRESS_PLUGIN_DEACTIVATION_FILE;
+
+        $this->assertTrue( method_exists('\AngularPress\Plugin', 'pluginDeactivation') );
     }
 
 }
