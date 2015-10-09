@@ -8,8 +8,47 @@
       "email": "kosutic.goran@gmail.com"
     }
   ],
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "wordpress/wordpress",
+        "type": "webroot",
+        "version": "4.3",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/WordPress/WordPress/archive/4.3.zip"
+        },
+        "require" : {
+          "fancyguy/webroot-installer": "1.0.0"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "wordpress/wordpress-phpunit-tests",
+        "version": "4.3",
+        "source": {
+          "url": "http://develop.svn.wordpress.org/",
+          "type": "svn",
+          "reference": "tags/4.3/tests/phpunit/"
+        },
+        "autoload": {
+          "classmap": ["includes/"]
+        }
+      }
+    }
+  ],
   "require": {
-    "phpunit/phpunit": "4.8.11"
+    "phpunit/phpunit": "4.8.11",
+    "fancyguy/webroot-installer": "1.0.0",
+    "wordpress/wordpress": "4.3",
+    "wordpress/wordpress-phpunit-tests": "4.3"
+  },
+  "extra": {
+    "webroot-dir": "public",
+    "webroot-package": "wordpress/wordpress"
   },
   "autoload": {
     "psr-4": {

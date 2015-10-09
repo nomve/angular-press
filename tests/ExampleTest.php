@@ -2,7 +2,7 @@
 
 namespace AngularPress\Tests;
 
-class ExampleTest extends \PHPUnit_Framework_TestCase {
+class ExampleTest extends \WP_UnitTestCase {
 
     public function test() {
 
