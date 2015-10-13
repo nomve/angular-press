@@ -83,8 +83,23 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
      */
     public function testSilentlyFailingWhenCallbackUsedIncorrectly() {
         
+        // no content
         $result = $this->pluginInstance->addAngularFieldToObject(
                                 array(),
+                                \AngularPress\Plugin::CONTENT_FIELD, array() );
+        
+        $this->assertTrue( empty($result['angular']) );
+        
+        // content not an array
+        $result = $this->pluginInstance->addAngularFieldToObject(
+                                1,
+                                \AngularPress\Plugin::CONTENT_FIELD, array() );
+        
+        $this->assertTrue( empty($result['angular']) );
+        
+        // no matching key
+        $result = $this->pluginInstance->addAngularFieldToObject(
+                                array('test'),
                                 \AngularPress\Plugin::CONTENT_FIELD, array() );
         
         $this->assertTrue( empty($result['angular']) );
