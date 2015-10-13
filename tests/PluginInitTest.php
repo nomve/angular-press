@@ -20,7 +20,12 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
         $this->assertFileExists( ANGULAR_PRESS_PLUGIN_FILE );
     }
 
+    /**
+     * tests if the plugin file uses the appropriate install hook
+     */
     function testPluginActivation() {
+        
+        $pluginInstance = new \AngularPress\Plugin;
 
         \WP_Mock::wpFunction(
             'register_activation_hook',
@@ -29,7 +34,7 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
                 'args' => array(
                     ANGULAR_PRESS_PLUGIN_FILE,
                     array(
-                        '\AngularPress\Plugin',
+                        $pluginInstance,
                         'pluginActivation'
                     )
                 ),
@@ -38,10 +43,15 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
 
         require_once ANGULAR_PRESS_PLUGIN_FILE;
 
-        $this->assertTrue( method_exists('\AngularPress\Plugin', 'pluginActivation') );
+        $this->assertTrue( method_exists($pluginInstance, 'pluginActivation') );
     }
 
+    /**
+     * tests if the plugin file uses the appropriate uninstall hook
+     */
     function testPluginDeactivation() {
+        
+        $pluginInstance = new \AngularPress\Plugin;
 
         \WP_Mock::wpFunction(
             'register_deactivation_hook',
@@ -50,7 +60,7 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
                 'args' => array(
                     ANGULAR_PRESS_PLUGIN_DEACTIVATION_FILE,
                     array(
-                        '\AngularPress\Plugin',
+                        $pluginInstance,
                         'pluginDeactivation'
                     )
                 ),
@@ -59,7 +69,7 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
 
         require_once ANGULAR_PRESS_PLUGIN_DEACTIVATION_FILE;
 
-        $this->assertTrue( method_exists('\AngularPress\Plugin', 'pluginDeactivation') );
+        $this->assertTrue( method_exists($pluginInstance, 'pluginDeactivation') );
     }
 
 }

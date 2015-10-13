@@ -6,12 +6,12 @@ namespace AngularPress;
 
 class Plugin {
 
-    public static function pluginActivation() {
+    public function pluginActivation() {
 
 
     }
 
-    public static function pluginDeactivation() {
+    public function pluginDeactivation() {
 
 
     }
