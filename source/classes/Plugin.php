@@ -6,6 +6,8 @@ namespace AngularPress;
 
 class Plugin {
     
+    const CONTENT_FIELD = 'content';
+    
     function __construct() {
         
         add_action( 'rest_api_init', array($this, 'registerPostContentField') );
@@ -25,7 +27,7 @@ class Plugin {
     public function registerPostContentField() {
         
         register_api_field( 'post',
-            'content',
+            self::CONTENT_FIELD,
             array(
                 'get_callback'    => array(
                     $this,
@@ -41,7 +43,7 @@ class Plugin {
      */
     public function addAngularFieldToObject( $object, $field_name, $request ) {
     
-        $object[$field_name]['angular'] = $object['content'];
+        $object[$field_name]['angular'] = $object[self::CONTENT_FIELD];
 
         return $object[$field_name];    
     }

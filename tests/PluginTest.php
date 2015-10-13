@@ -43,7 +43,7 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
                 'times' => 1,
                 'args' => array(
                     'post',
-                    'content',
+                    \AngularPress\Plugin::CONTENT_FIELD,
                     array(
                         'get_callback'    => array(
                             $this->pluginInstance,
@@ -64,14 +64,15 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
      */
     public function testAddingAngularJsonFieldToPostContent() {
         
-        $field = 'content';
         $mockObject = array(
-            $field => array(
+            \AngularPress\Plugin::CONTENT_FIELD => array(
                 'rendered' => 1
             )
         );
         
-        $result = $this->pluginInstance->addAngularFieldToObject( $mockObject, $field, array() );
+        $result = $this->pluginInstance->addAngularFieldToObject(
+                                $mockObject,
+                                \AngularPress\Plugin::CONTENT_FIELD, array() );
         
         $this->assertFalse( empty($result['angular']) );
     }
