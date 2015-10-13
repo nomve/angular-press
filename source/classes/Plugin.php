@@ -51,7 +51,7 @@ class Plugin {
         if ( empty($post) )
             return $object[$field_name];
         
-        $object[$field_name]['angular'] = $post->post_content;
+        $object[$field_name]['angular'] = do_shortcode( $post->post_content );
 
         return $object[$field_name];    
     }

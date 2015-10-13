@@ -59,7 +59,7 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
     /**
      * 
      */
-    public function testAddingAngularJsonFieldToPostContent() {
+    private function setupWpExamplePostObject() {
         
         $postId = 1;
         
@@ -76,6 +76,26 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
             )
         );
         
+        return $post;
+    }
+    
+    private function setupWpPostContentShortcodeParsing($post) {
+
+        \WP_Mock::wpFunction(
+            'do_shortcode',
+            array(
+                'times' => 1,
+                'args' => array($post->post_content),
+                'return' => $post->post_content
+            )
+        );
+    }
+    
+    public function testAddingAngularJsonFieldToPostContent() {
+        
+        $post = $this->setupWpExamplePostObject();
+        $this->setupWpPostContentShortcodeParsing($post);
+        
         // post array passed as parameter from wordpress
         // first param to our callback
         $mockObject = array(
@@ -90,6 +110,7 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
                                 \AngularPress\Plugin::CONTENT_FIELD, array() );
         
         $this->assertFalse( empty($result['angular']) );
+        $this->assertTrue( $result['angular'] === $post->post_content );
     }
     /**
      * 
