@@ -40,6 +40,10 @@ class Plugin {
      * adds a field called angular to the given object[field]
      */
     public function addAngularFieldToObject( $object, $field_name, $request ) {
+    
+        $object[$field_name]['angular'] = $object['content'];
+
+        return $object[$field_name];    
     }
     
 }

@@ -56,6 +56,15 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
         
         $pluginInstance = new \AngularPress\Plugin;
         
-        //$pluginInstance->addAngularFieldToObject();
+        $field = 'content';
+        $mockObject = array(
+            $field => array(
+                'rendered' => 1
+            )
+        );
+        
+        $result = $pluginInstance->addAngularFieldToObject( $mockObject, $field, array() );
+        
+        $this->assertFalse( empty($result['angular']) );
     }
 }
