@@ -46,7 +46,12 @@ class Plugin {
         if ( empty($object['id']) || empty($object[$field_name]) )
             return $object;
     
-        $object[$field_name]['angular'] = $object[self::CONTENT_FIELD];
+        $post = get_post($object['id']);
+        
+        if ( empty($post) )
+            return $object[$field_name];
+        
+        $object[$field_name]['angular'] = $post->post_content;
 
         return $object[$field_name];    
     }

@@ -61,7 +61,23 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
      */
     public function testAddingAngularJsonFieldToPostContent() {
         
+        $postId = 1;
+        
+        $post = new \stdClass;
+        $post->ID = $postId;
+        $post->post_content = 1;
+
+        \WP_Mock::wpFunction(
+            'get_post',
+            array(
+                'times' => 1,
+                'args' => array($postId),
+                'return' => $post
+            )
+        );
+        
         // post array passed as parameter from wordpress
+        // first param to our callback
         $mockObject = array(
             'id' => 1,
             \AngularPress\Plugin::CONTENT_FIELD => array(
