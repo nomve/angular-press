@@ -17,7 +17,6 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
         parent::tearDown();
         unset( $this->pluginInstance );
     }
-
     /**
      * 
      */
@@ -31,7 +30,6 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
         
         new \AngularPress\Plugin();
     }
-    
     /**
      * 
      */
@@ -58,7 +56,6 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
         
         $this->pluginInstance->registerPostContentField();
     }
-    
     /**
      * 
      */
@@ -77,31 +74,31 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
         
         $this->assertFalse( empty($result['angular']) );
     }
-    
     /**
      * 
      */
     public function testSilentlyFailingWhenCallbackUsedIncorrectly() {
         
-        // no content
-        $result = $this->pluginInstance->addAngularFieldToObject(
-                                array(),
-                                \AngularPress\Plugin::CONTENT_FIELD, array() );
+        $objectOptions = array(
+            // no content
+            array(),
+            // content not an array
+            1,
+            // no matching key
+            array('test')
+        );
         
-        $this->assertTrue( empty($result['angular']) );
-        
-        // content not an array
-        $result = $this->pluginInstance->addAngularFieldToObject(
-                                1,
-                                \AngularPress\Plugin::CONTENT_FIELD, array() );
-        
-        $this->assertTrue( empty($result['angular']) );
-        
-        // no matching key
-        $result = $this->pluginInstance->addAngularFieldToObject(
-                                array('test'),
-                                \AngularPress\Plugin::CONTENT_FIELD, array() );
-        
-        $this->assertTrue( empty($result['angular']) );
+        foreach ( $objectOptions as $object ) {
+            
+            $result = $this->pluginInstance->addAngularFieldToObject(
+                                    $object,
+                                    \AngularPress\Plugin::CONTENT_FIELD, array() );
+
+            $this->assertTrue( empty($result['angular']) );
+        }
     }
+    /**
+     * 
+     */
+    
 }
