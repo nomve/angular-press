@@ -5,6 +5,18 @@ namespace AngularPress\Tests;
 
 
 class PluginTest extends \WP_Mock\Tools\TestCase {
+    
+    private $pluginInstance;
+
+    public function setUp() {
+        parent::setUp();
+        $this->pluginInstance = new \AngularPress\Plugin;
+    }
+
+    public function tearDown() {
+        parent::tearDown();
+        unset( $this->pluginInstance );
+    }
 
     /**
      * 
@@ -24,8 +36,6 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
      * 
      */
     public function testRegisteringFieldToPostContent() {
-        
-        $pluginInstance = new \AngularPress\Plugin;
 
         \WP_Mock::wpFunction(
             'register_api_field',
@@ -36,7 +46,7 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
                     'content',
                     array(
                         'get_callback'    => array(
-                            $pluginInstance,
+                            $this->pluginInstance,
                             'addAngularFieldToObject'
                         ),
                         'update_callback' => null,
@@ -46,15 +56,13 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
             )
         );
         
-        $pluginInstance->registerPostContentField();
+        $this->pluginInstance->registerPostContentField();
     }
     
     /**
      * 
      */
     public function testAddingAngularJsonFieldToPostContent() {
-        
-        $pluginInstance = new \AngularPress\Plugin;
         
         $field = 'content';
         $mockObject = array(
@@ -63,7 +71,7 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
             )
         );
         
-        $result = $pluginInstance->addAngularFieldToObject( $mockObject, $field, array() );
+        $result = $this->pluginInstance->addAngularFieldToObject( $mockObject, $field, array() );
         
         $this->assertFalse( empty($result['angular']) );
     }
