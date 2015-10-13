@@ -8,9 +8,18 @@ class Plugin {
     
     const CONTENT_FIELD = 'content';
     
+    private $shortcodeParser;
+    
     function __construct() {
         
         add_action( 'rest_api_init', array($this, 'registerPostContentField') );
+        
+        $this->shortcodeParser = new ShortcodeParser();
+    }
+    
+    public function getShortcodeParser() {
+        
+        return $this->shortcodeParser;
     }
 
     public function pluginActivation() {

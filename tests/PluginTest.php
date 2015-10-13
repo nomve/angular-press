@@ -20,6 +20,13 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
     /**
      * 
      */
+    public function testShortcodeParserWasInstantiatedWithThePlugin() {
+        
+        $this->assertFalse( empty($this->pluginInstance->getShortcodeParser()) );
+    }
+    /**
+     * 
+     */
     public function testRegisteringCallbackToAddJsonField() {
         
         \WP_Mock::expectActionAdded( 'rest_api_init', array(
