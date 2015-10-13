@@ -42,6 +42,9 @@ class Plugin {
      * adds a field called angular to the given object[field]
      */
     public function addAngularFieldToObject( $object, $field_name, $request ) {
+        
+        if ( empty($object) )
+            return $object;
     
         $object[$field_name]['angular'] = $object[self::CONTENT_FIELD];
 

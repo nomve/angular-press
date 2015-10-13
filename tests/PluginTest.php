@@ -64,6 +64,7 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
      */
     public function testAddingAngularJsonFieldToPostContent() {
         
+        // post array passed as parameter from wordpress
         $mockObject = array(
             \AngularPress\Plugin::CONTENT_FIELD => array(
                 'rendered' => 1
@@ -75,5 +76,17 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
                                 \AngularPress\Plugin::CONTENT_FIELD, array() );
         
         $this->assertFalse( empty($result['angular']) );
+    }
+    
+    /**
+     * 
+     */
+    public function testSilentlyFailingWhenCallbackUsedIncorrectly() {
+        
+        $result = $this->pluginInstance->addAngularFieldToObject(
+                                array(),
+                                \AngularPress\Plugin::CONTENT_FIELD, array() );
+        
+        $this->assertTrue( empty($result['angular']) );
     }
 }
