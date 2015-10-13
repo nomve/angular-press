@@ -8,7 +8,7 @@ class Plugin {
     
     function __construct() {
         
-        add_action( 'rest_api_init', array($this, 'registerPostField') );
+        add_action( 'rest_api_init', array($this, 'registerPostContentField') );
     }
 
     public function pluginActivation() {
@@ -22,14 +22,14 @@ class Plugin {
     /**
      * registers a field in the post content field
      */
-    public function registerPostField() {
+    public function registerPostContentField() {
         
         register_api_field( 'post',
             'content',
             array(
                 'get_callback'    => array(
                     $this,
-                    'addAngularPostContentField'
+                    'addAngularFieldToObject'
                 ),
                 'update_callback' => null,
                 'schema'          => null,
@@ -37,9 +37,9 @@ class Plugin {
         ); 
     }
     /**
-     * adds a field in the post content
+     * adds a field called angular to the given object[field]
      */
-    public function addAngularPostContentField() {
+    public function addAngularFieldToObject( $object, $field_name, $request ) {
     }
     
 }

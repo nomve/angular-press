@@ -13,7 +13,7 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
         
         \WP_Mock::expectActionAdded( 'rest_api_init', array(
                 new \AngularPress\Plugin,
-                'registerPostField'
+                'registerPostContentField'
             )
         );
         
@@ -37,7 +37,7 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
                     array(
                         'get_callback'    => array(
                             $pluginInstance,
-                            'addAngularPostContentField'
+                            'addAngularFieldToObject'
                         ),
                         'update_callback' => null,
                         'schema'          => null,
@@ -46,7 +46,7 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
             )
         );
         
-        $pluginInstance->registerPostField();
+        $pluginInstance->registerPostContentField();
     }
     
     /**
@@ -56,6 +56,6 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
         
         $pluginInstance = new \AngularPress\Plugin;
         
-        $pluginInstance->addAngularPostContentField();
+        //$pluginInstance->addAngularFieldToObject();
     }
 }
