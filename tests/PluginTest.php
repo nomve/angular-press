@@ -63,6 +63,7 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
         
         // post array passed as parameter from wordpress
         $mockObject = array(
+            'id' => 1,
             \AngularPress\Plugin::CONTENT_FIELD => array(
                 'rendered' => 1
             )
@@ -85,7 +86,13 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
             // content not an array
             1,
             // no matching key
-            array('test')
+            array('test'),
+            // no id
+            array(
+                \AngularPress\Plugin::CONTENT_FIELD => array(
+                'rendered' => 1
+                )
+            )
         );
         
         foreach ( $objectOptions as $object ) {
@@ -97,8 +104,4 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
             $this->assertTrue( empty($result['angular']) );
         }
     }
-    /**
-     * 
-     */
-    
 }
