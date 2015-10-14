@@ -26,7 +26,7 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
             'post_gallery',
             array(
                 $this->shortcodeParser,
-                'parseGallery'
+                'galleryCallback'
             ),
             0,
             2
@@ -45,7 +45,7 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
 
         $this->setupWpGetAttachmentImage();
 
-        $result = $this->shortcodeParser->parseGallery(null, $attributes);
+        $result = $this->shortcodeParser->galleryCallback(null, $attributes);
 
         $this->assertTrue( $result === '<gallery images="[{"src":"path","width":300,"height":200}]"></gallery>' );
     }
@@ -80,7 +80,7 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
             1
         );
 
-        $result = $this->shortcodeParser->parseGallery(null, $attributes);
+        $result = $this->shortcodeParser->galleryCallback(null, $attributes);
 
         $this->assertTrue( $result === '<gallery images="[{"src":"path\/to\/thumbnail","width":100,"height":100}]"></gallery>' );
     }

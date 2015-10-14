@@ -9,12 +9,12 @@ class ShortcodeParser {
      */
     public function addFilters() {
 
-        add_filter( 'post_gallery', array($this, 'parseGallery'), 0, 2 );
+        add_filter( 'post_gallery', array($this, 'galleryCallback'), 0, 2 );
     }
     /**
      *
      */
-    public function parseGallery($currentValue, $attributes) {
+    public function galleryCallback($currentValue, $attributes) {
 
         $ids = explode( ',', $attributes['ids'] );
         $size = ( empty($attributes['size']) ) ? 'thumbnail' : $attributes['size'];

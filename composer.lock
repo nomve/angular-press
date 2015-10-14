@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eee1410dc85e5022de50ade1d132f3be",
+    "hash": "afc1d06210ab91726fbd12ed825ab8d8",
     "packages": [
         {
             "name": "10up/wp_mock",
