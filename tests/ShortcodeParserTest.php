@@ -49,11 +49,6 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
         \WP_Mock::wpFunction(
             'wp_get_attachment_image_src',
             array(
-                'times' => 1,
-                'args' => array(
-                    $imageId,
-                    'full'
-                ),
                 'return' => array(
                     'path', 300, 200
                 )
