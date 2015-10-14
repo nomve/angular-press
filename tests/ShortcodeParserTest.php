@@ -7,6 +7,10 @@ namespace AngularPress\Tests;
 class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
 
     private $shortcodeParser;
+    private $imageId;
+    private $imageSize;
+    private $imageWidth;
+    private $imageHeight;
 
     public function setUp() {
         parent::setUp();
@@ -16,6 +20,10 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
     public function tearDown() {
         parent::tearDown();
         unset($this->shortcodeParser);
+        unset($this->imageId);
+        unset($this->imageSize);
+        unset($this->imageWidth);
+        unset($this->imageHeight);
     }
     /**
      * 
@@ -39,10 +47,8 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
      */
     public function testAngularGalleryShortcodeParsing() {
 
-        $attributes = array(
-            'ids' => 4
-        );
-
+        $this->imageId = 4;
+        $attributes = $this->setupWpGetGalleryAttributes();
         $this->setupWpGetAttachmentImage();
 
         $result = $this->shortcodeParser->galleryCallback(null, $attributes);
@@ -52,39 +58,59 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
     /**
      *
      */
-    public function testGalleryImageHasProperSize() {
-
-        $imageId = 4;
-        $imageSize = 'thumbnail';
+    public function testGalleryImageHasProperDefaultSize() {
+        
+        $this->imageId = 4;
+        //thumbnail is wordpress default
+        $this->imageSize = 'thumbnail';
+        $this->imageWidth = 100;
+        $this->imageHeight = 100;
 
         $attributes = array(
-            'ids' => $imageId,
-            'size' => $imageSize
+            'ids' => $this->imageId
         );
-        // fullsize - shouldn't be used
-        $this->setupWpGetAttachmentImage(
-            array(
-                $imageId, 'fullsize'
-            )
-        );
-        // thumbnail - default size
-        $this->setupWpGetAttachmentImage(
-            array(
-                $imageId, $imageSize
-            ),
-            array(
-                'path/to/thumbnail',
-                100,
-                100
-            ),
-            1
-        );
-
+        
+        $this->setupWpGetProperAttachmentImage();
+        
         $result = $this->shortcodeParser->galleryCallback(null, $attributes);
 
-        $this->assertTrue( $result === '<gallery images="[{"src":"path\/to\/thumbnail","width":100,"height":100}]"></gallery>' );
+        $this->assertTrue( $result === 
+                            sprintf(
+                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s}]"></gallery>',
+                                $this->imageSize,
+                                $this->imageWidth,
+                                $this->imageHeight
+                            )
+                         );
     }
+    /**
+     * 
+     */
+    public function testGalleryImageHasProperCustomSize() {
+        
+        $this->imageId = 4;
+        $this->imageSize = 'medium';
+        $this->imageWidth = 400;
+        $this->imageHeight = 300;
 
+        $attributes = $this->setupWpGetGalleryAttributes();
+        $this->setupWpGetProperAttachmentImage();
+        
+        $result = $this->shortcodeParser->galleryCallback(null, $attributes);
+
+        $this->assertTrue( $result === 
+                            sprintf(
+                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s}]"></gallery>',
+                                $this->imageSize,
+                                $this->imageWidth,
+                                $this->imageHeight
+                            )
+                         );
+    }
+    /**
+     * setup a function call expectation to retrieve images with given params
+     * call arguments, what to returns, how many times
+     */
     private function setupWpGetAttachmentImage($args = '',$return = '', $times = 0) {
 
         if ( empty($return) ) {
@@ -106,6 +132,42 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
         \WP_Mock::wpFunction(
             'wp_get_attachment_image_src',
             $options
+        );
+    }
+    /**
+     * sets up two function call expectations to get a wordpress image 
+     * one that shouldn't be called
+     * one that must be called
+     */
+    private function setupWpGetProperAttachmentImage() {
+
+        $attributes = $this->setupWpGetGalleryAttributes();
+        // fullsize - shouldn't be used
+        $this->setupWpGetAttachmentImage(
+            array(
+                $this->imageId, 'fullsize'
+            )
+        );
+        // the expectation that should be used
+        $this->setupWpGetAttachmentImage(
+            array(
+                $this->imageId, $this->imageSize
+            ),
+            array(
+                sprintf('path/to/%s', $this->imageSize),
+                $this->imageWidth,
+                $this->imageHeight
+            ),
+            1
+        );
+    }
+    /**
+     * 
+     */
+    private function setupWpGetGalleryAttributes() {
+        return array(
+            'ids' => $this->imageId,
+            'size' => $this->imageSize
         );
     }
 }
