@@ -7,7 +7,7 @@ namespace AngularPress\Tests;
 class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
 
     private $shortcodeParser;
-    private $imageId = 4;
+    private $imageId;
     private $imageSize;
     private $imageWidth;
     private $imageHeight;
@@ -16,6 +16,10 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
     public function setUp() {
         parent::setUp();
         $this->shortcodeParser = new \AngularPress\ShortcodeParser();
+        $this->imageId = 4;
+        $this->imageSize = 'thumbnail';        
+        $this->imageWidth = 100;
+        $this->imageHeight = 100;
     }
 
     public function tearDown() {
@@ -60,15 +64,12 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
      *
      */
     public function testGalleryImageHasProperDefaultSize() {
-        
-        //thumbnail is wordpress default
-        $this->imageSize = 'thumbnail';
-        $this->imageWidth = 100;
-        $this->imageHeight = 100;
 
         $attributes = $this->setupWpGetGalleryAttributes();
         //should use default size
         unset($attributes['size']);
+        $this->assertTrue( empty($attributes['size']) );
+        $this->assertTrue( $this->imageSize === 'thumbnail' );
         
         $this->setupWpGetProperAttachmentImage();
         
