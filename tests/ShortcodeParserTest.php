@@ -123,6 +123,26 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
                          );
     }
     /**
+     * 
+     */
+    public function testGalleryImageHasNoLink() {
+
+        $this->imageLink = 'none';
+        $attributes = $this->setupWpGetGalleryAttributes();
+        $this->setupWpGetProperAttachmentImage();
+        
+        $result = $this->shortcodeParser->galleryCallback(null, $attributes);
+
+        $this->assertTrue( $result === 
+                            sprintf(
+                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s}]"></gallery>',
+                                $this->imageSize,
+                                $this->imageWidth,
+                                $this->imageHeight
+                            )
+                         );
+    }
+    /**
      * setup a function call expectation to retrieve images with given params
      * call arguments, what to returns, how many times
      */
