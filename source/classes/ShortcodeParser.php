@@ -17,18 +17,15 @@ class ShortcodeParser {
     public function galleryCallback($currentValue, $attributes) {
 
         $ids = explode( ',', $attributes['ids'] );
-        $size = ( empty($attributes['size']) ) ? 'thumbnail' : $attributes['size'];
+        // wordpress default size is 'thumbnail'
+        $size = empty($attributes['size']) ? 'thumbnail' : $attributes['size'];
 
         if ( empty($ids) )
             return '';
 
         $imageObjects = array_map( function($id) use(&$size) {
-            $obj = new \stdClass;
-            $image = wp_get_attachment_image_src( $id, $size );
-            $obj->src = $image[0];
-            $obj->width = $image[1];
-            $obj->height = $image[2];
-            return $obj;
+            
+            return new Data\Image($id, $size);
         }, $ids);
 
         return '<gallery images="' . json_encode($imageObjects) . '"></gallery>';

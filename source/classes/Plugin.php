@@ -11,8 +11,9 @@ class Plugin {
     private $shortcodeParser;
 
     function __construct() {
+        
         $this->shortcodeParser = new ShortcodeParser();
-
+        
         add_action( 'rest_api_init', array($this, 'registerPostContentField') );
     }
 
