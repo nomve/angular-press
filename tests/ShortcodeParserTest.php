@@ -7,10 +7,11 @@ namespace AngularPress\Tests;
 class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
 
     private $shortcodeParser;
-    private $imageId;
+    private $imageId = 4;
     private $imageSize;
     private $imageWidth;
     private $imageHeight;
+    private $imageLink;
 
     public function setUp() {
         parent::setUp();
@@ -24,6 +25,7 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
         unset($this->imageSize);
         unset($this->imageWidth);
         unset($this->imageHeight);
+        unset($this->imageLink);
     }
     /**
      * 
@@ -46,8 +48,7 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
      *
      */
     public function testAngularGalleryShortcodeParsing() {
-
-        $this->imageId = 4;
+        
         $attributes = $this->setupWpGetGalleryAttributes();
         $this->setupWpGetAttachmentImage();
 
@@ -60,15 +61,14 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
      */
     public function testGalleryImageHasProperDefaultSize() {
         
-        $this->imageId = 4;
         //thumbnail is wordpress default
         $this->imageSize = 'thumbnail';
         $this->imageWidth = 100;
         $this->imageHeight = 100;
 
-        $attributes = array(
-            'ids' => $this->imageId
-        );
+        $attributes = $this->setupWpGetGalleryAttributes();
+        //should use default size
+        unset($attributes['size']);
         
         $this->setupWpGetProperAttachmentImage();
         
@@ -88,7 +88,6 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
      */
     public function testGalleryImageHasProperCustomSize() {
         
-        $this->imageId = 4;
         $this->imageSize = 'medium';
         $this->imageWidth = 400;
         $this->imageHeight = 300;
@@ -167,7 +166,8 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
     private function setupWpGetGalleryAttributes() {
         return array(
             'ids' => $this->imageId,
-            'size' => $this->imageSize
+            'size' => $this->imageSize,
+            'link' => $this->imageLink
         );
     }
 }
