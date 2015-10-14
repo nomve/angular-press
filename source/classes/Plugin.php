@@ -7,19 +7,13 @@ namespace AngularPress;
 class Plugin {
     
     const CONTENT_FIELD = 'content';
-    
+
     private $shortcodeParser;
-    
+
     function __construct() {
-        
-        add_action( 'rest_api_init', array($this, 'registerPostContentField') );
-        
         $this->shortcodeParser = new ShortcodeParser();
-    }
-    
-    public function getShortcodeParser() {
-        
-        return $this->shortcodeParser;
+
+        add_action( 'rest_api_init', array($this, 'registerPostContentField') );
     }
 
     public function pluginActivation() {
@@ -59,10 +53,17 @@ class Plugin {
         
         if ( empty($post) )
             return $object[$field_name];
-        
+
+        $this->adjustContentForAngular();
+
         $object[$field_name]['angular'] = do_shortcode( $post->post_content );
 
         return $object[$field_name];    
     }
-    
+
+    private function adjustContentForAngular() {
+        
+        $this->shortcodeParser->addFilters();
+    }
+
 }

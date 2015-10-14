@@ -20,13 +20,6 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
     /**
      * 
      */
-    public function testShortcodeParserWasInstantiatedWithThePlugin() {
-        
-        $this->assertFalse( empty($this->pluginInstance->getShortcodeParser()) );
-    }
-    /**
-     * 
-     */
     public function testRegisteringCallbackToAddJsonField() {
         
         \WP_Mock::expectActionAdded( 'rest_api_init', array(
@@ -66,13 +59,13 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
     /**
      * 
      */
-    private function setupWpExamplePostObject() {
+    private function setupWpExamplePostObject($content = 1) {
         
         $postId = 1;
         
         $post = new \stdClass;
         $post->ID = $postId;
-        $post->post_content = 1;
+        $post->post_content = $content;
 
         \WP_Mock::wpFunction(
             'get_post',
@@ -97,25 +90,25 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
             )
         );
     }
-    
+
     public function testAddingAngularJsonFieldToPostContent() {
-        
+
         $post = $this->setupWpExamplePostObject();
         $this->setupWpPostContentShortcodeParsing($post);
-        
+
         // post array passed as parameter from wordpress
         // first param to our callback
         $mockObject = array(
-            'id' => 1,
+            'id' => $post->ID,
             \AngularPress\Plugin::CONTENT_FIELD => array(
-                'rendered' => 1
+                'rendered' => $post->post_content
             )
         );
-        
+
         $result = $this->pluginInstance->addAngularFieldToObject(
                                 $mockObject,
                                 \AngularPress\Plugin::CONTENT_FIELD, array() );
-        
+
         $this->assertFalse( empty($result['angular']) );
         $this->assertTrue( $result['angular'] === $post->post_content );
     }
