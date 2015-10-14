@@ -62,7 +62,7 @@ class Plugin {
     }
 
     private function adjustContentForAngular() {
-        
+
         $this->shortcodeParser->addFilters();
     }
 

@@ -37,8 +37,31 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
     /**
      *
      */
-//    public function testAngularGalleryShortcodeParsing() {
-//
-//        $galleryShortcode = '[gallery id="4"]';
-//    }
+    public function testAngularGalleryShortcodeParsing() {
+
+        $imageId = 4;
+
+        $attributes = array(
+            'ids' => $imageId
+        );
+        $galleryShortcode = sprintf( '[gallery id="%s"]', $imageId );
+
+        \WP_Mock::wpFunction(
+            'wp_get_attachment_image_src',
+            array(
+                'times' => 1,
+                'args' => array(
+                    $imageId,
+                    'full'
+                ),
+                'return' => array(
+                    'path', 300, 200
+                )
+            )
+        );
+
+        $result = $this->shortcodeParser->parseGallery(null, $attributes);
+
+        $this->assertTrue( $result === '<gallery images="[{"src":"path","width":300,"height":200}]"></gallery>' );
+    }
 }
