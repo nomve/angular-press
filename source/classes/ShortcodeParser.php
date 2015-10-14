@@ -17,15 +17,15 @@ class ShortcodeParser {
     public function galleryCallback($currentValue, $attributes) {
 
         $ids = explode( ',', $attributes['ids'] );
-        // wordpress default size is 'thumbnail'
         $size = empty($attributes['size']) ? 'thumbnail' : $attributes['size'];
+        $link = empty($attributes['link']) ? 'post' : $attributes['link'];
 
         if ( empty($ids) )
             return '';
 
-        $imageObjects = array_map( function($id) use(&$size) {
+        $imageObjects = array_map( function($id) use(&$size, &$link) {
             
-            return new Data\Image($id, $size);
+            return new Data\Image($id, $size, $link);
         }, $ids);
 
         return '<gallery images="' . json_encode($imageObjects) . '"></gallery>';

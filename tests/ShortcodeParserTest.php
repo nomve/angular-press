@@ -20,6 +20,7 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
         $this->imageSize = 'thumbnail';        
         $this->imageWidth = 100;
         $this->imageHeight = 100;
+        $this->imageLink = 'post';
     }
 
     public function tearDown() {
@@ -51,25 +52,16 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
     /**
      *
      */
-    public function testAngularGalleryShortcodeParsing() {
-        
-        $attributes = $this->setupWpGetGalleryAttributes();
-        $this->setupWpGetAttachmentImage();
-
-        $result = $this->shortcodeParser->galleryCallback(null, $attributes);
-
-        $this->assertTrue( $result === '<gallery images="[{"src":"path","width":300,"height":200}]"></gallery>' );
-    }
-    /**
-     *
-     */
-    public function testGalleryImageHasProperDefaultSize() {
+    public function testGalleryImageHasProperDefaults() {
 
         $attributes = $this->setupWpGetGalleryAttributes();
         //should use default size
         unset($attributes['size']);
         $this->assertTrue( empty($attributes['size']) );
         $this->assertTrue( $this->imageSize === 'thumbnail' );
+        //should use default link
+        unset($attributes['link']);
+        $this->assertTrue( empty($attributes['link']) );
         
         $this->setupWpGetProperAttachmentImage();
         
@@ -77,10 +69,11 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
 
         $this->assertTrue( $result === 
                             sprintf(
-                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s}]"></gallery>',
+                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s,"href":"%s"}]"></gallery>',
                                 $this->imageSize,
                                 $this->imageWidth,
-                                $this->imageHeight
+                                $this->imageHeight,
+                                $this->imageLink
                             )
                          );
     }
@@ -100,10 +93,11 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
 
         $this->assertTrue( $result === 
                             sprintf(
-                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s}]"></gallery>',
+                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s,"href":"%s"}]"></gallery>',
                                 $this->imageSize,
                                 $this->imageWidth,
-                                $this->imageHeight
+                                $this->imageHeight,
+                                $this->imageLink
                             )
                          );
     }
@@ -140,8 +134,7 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
      * one that must be called
      */
     private function setupWpGetProperAttachmentImage() {
-
-        $attributes = $this->setupWpGetGalleryAttributes();
+        
         // fullsize - shouldn't be used
         $this->setupWpGetAttachmentImage(
             array(
@@ -160,6 +153,16 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
             ),
             1
         );
+        // mock get_permalink for the image link
+        if ( $this->imageLink === 'post' )
+            \WP_Mock::wpFunction(
+                'get_permalink',
+                array(
+                    'args' => $this->imageId,
+                    'return' => $this->imageLink,
+                    'times' => 1
+                )
+            );
     }
     /**
      * 
