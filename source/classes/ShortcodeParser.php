@@ -17,13 +17,14 @@ class ShortcodeParser {
     public function parseGallery($currentValue, $attributes) {
 
         $ids = explode( ',', $attributes['ids'] );
+        $size = ( empty($attributes['size']) ) ? 'thumbnail' : $attributes['size'];
 
         if ( empty($ids) )
             return '';
 
-        $imageObjects = array_map( function($id) {
+        $imageObjects = array_map( function($id) use(&$size) {
             $obj = new \stdClass;
-            $image = wp_get_attachment_image_src( $id, 'full' );
+            $image = wp_get_attachment_image_src( $id, $size );
             $obj->src = $image[0];
             $obj->width = $image[1];
             $obj->height = $image[2];
