@@ -42,5 +42,9 @@ class Image {
         if ( $this->link === 'post' ) {
             $this->href = get_permalink($this->id);
         }
+        elseif ( $this->link === 'file' ) {
+            $imageFile = wp_get_attachment_image_src( $this->id, 'full' );
+            $this->href = $imageFile[0];
+        }
     }
 }

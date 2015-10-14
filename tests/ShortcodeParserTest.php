@@ -102,6 +102,27 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
                          );
     }
     /**
+     * 
+     */
+    public function testGalleryImageHasProperLinkToFile() {
+
+        $this->imageLink = 'file';
+        $attributes = $this->setupWpGetGalleryAttributes();
+        $this->setupWpGetProperAttachmentImage();
+        
+        $result = $this->shortcodeParser->galleryCallback(null, $attributes);
+
+        $this->assertTrue( $result === 
+                            sprintf(
+                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s,"href":"%s"}]"></gallery>',
+                                $this->imageSize,
+                                $this->imageWidth,
+                                $this->imageHeight,
+                                $this->imageLink
+                            )
+                         );
+    }
+    /**
      * setup a function call expectation to retrieve images with given params
      * call arguments, what to returns, how many times
      */
@@ -135,10 +156,26 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
      */
     private function setupWpGetProperAttachmentImage() {
         
-        // fullsize - shouldn't be used
+        $fullsizeTimes = 0;
+        
+        // mock get_permalink for the image link
+        if ( $this->imageLink === 'post' )
+            \WP_Mock::wpFunction(
+                'get_permalink',
+                array(
+                    'args' => $this->imageId,
+                    'return' => $this->imageLink,
+                    'times' => 1
+                )
+            );
+        
+        // fullsize - shouldn't be used except for file link
         $this->setupWpGetAttachmentImage(
             array(
-                $this->imageId, 'fullsize'
+                $this->imageId, 'full'
+            ),
+            array(
+                $this->imageLink
             )
         );
         // the expectation that should be used
@@ -153,16 +190,6 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
             ),
             1
         );
-        // mock get_permalink for the image link
-        if ( $this->imageLink === 'post' )
-            \WP_Mock::wpFunction(
-                'get_permalink',
-                array(
-                    'args' => $this->imageId,
-                    'return' => $this->imageLink,
-                    'times' => 1
-                )
-            );
     }
     /**
      * 
