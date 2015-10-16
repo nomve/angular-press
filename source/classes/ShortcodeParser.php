@@ -23,7 +23,7 @@ class ShortcodeParser {
         if ( empty($ids) )
             return '';
 
-        $imageObjects = array_map( function($id) use(&$size, &$link) {
+        $imageObjects = array_map( function($id) use($size, $link) {
             
             return new Data\Image($id, $size, $link);
         }, $ids);
