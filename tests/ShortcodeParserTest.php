@@ -69,7 +69,8 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
 
         $this->assertTrue( $result === 
                             sprintf(
-                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s,"href":"%s"}]"></gallery>',
+                                '<gallery images=%1$s[{"src":"path\/to\/%2$s","width":%3$s,"height":%4$s,"href":"%5$s"}]%1$s></gallery>',
+                                '\'',
                                 $this->imageSize,
                                 $this->imageWidth,
                                 $this->imageHeight,
@@ -93,7 +94,8 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
 
         $this->assertTrue( $result === 
                             sprintf(
-                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s,"href":"%s"}]"></gallery>',
+                                '<gallery images=%1$s[{"src":"path\/to\/%2$s","width":%3$s,"height":%4$s,"href":"%5$s"}]%1$s></gallery>',
+                                '\'',
                                 $this->imageSize,
                                 $this->imageWidth,
                                 $this->imageHeight,
@@ -114,7 +116,8 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
 
         $this->assertTrue( $result === 
                             sprintf(
-                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s,"href":"%s"}]"></gallery>',
+                                '<gallery images=%1$s[{"src":"path\/to\/%2$s","width":%3$s,"height":%4$s,"href":"%5$s"}]%1$s></gallery>',
+                                '\'',
                                 $this->imageSize,
                                 $this->imageWidth,
                                 $this->imageHeight,
@@ -135,7 +138,8 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
 
         $this->assertTrue( $result === 
                             sprintf(
-                                '<gallery images="[{"src":"path\/to\/%s","width":%s,"height":%s}]"></gallery>',
+                                '<gallery images=%1$s[{"src":"path\/to\/%2$s","width":%3$s,"height":%4$s}]%1$s></gallery>',
+                                '\'',
                                 $this->imageSize,
                                 $this->imageWidth,
                                 $this->imageHeight

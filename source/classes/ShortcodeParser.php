@@ -28,6 +28,6 @@ class ShortcodeParser {
             return new Data\Image($id, $size, $link);
         }, $ids);
 
-        return '<gallery images="' . json_encode($imageObjects) . '"></gallery>';
+        return "<gallery images='" . json_encode($imageObjects) . "'></gallery>";
     }
 }
