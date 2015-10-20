@@ -4,8 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "afc1d06210ab91726fbd12ed825ab8d8",
-    "packages": [
+    "hash": "90a182e965692e5000e5f136c1286c65",
+    "packages": [],
+    "packages-dev": [
         {
             "name": "10up/wp_mock",
             "version": "dev-master",
@@ -1208,7 +1209,6 @@
             "type": "webroot"
         }
     ],
-    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {

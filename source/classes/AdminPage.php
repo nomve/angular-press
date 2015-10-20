@@ -18,8 +18,7 @@ class AdminPage {
      * 
      */
     public function getGalleryTemplate() {
-        $option = get_option( self::OPTIONS_FIELD );
-        return $option;
+        return get_option( self::OPTIONS_FIELD );
     }
     /**
      * 
