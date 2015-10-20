@@ -17,7 +17,7 @@ class Plugin {
     function __construct() {
         
         $this->shortcodeParser = new ShortcodeParser();
-        $this->admin = new Admin();
+        $this->adminPage = new AdminPage();
         
         add_action( 'rest_api_init', array($this, 'registerPostContentField') );
         add_action( 'admin_menu', array($this, 'addSubmenuPage') );
@@ -84,7 +84,7 @@ class Plugin {
             self::REQUIRED_PERMISSIONS,
             self::SLUG,
             array(
-                $this->admin,
+                $this->adminPage,
                 'renderOptionsPage'
             )
         );

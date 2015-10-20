@@ -4,7 +4,7 @@
 namespace AngularPress;
 
 
-class Admin {
+class AdminPage {
 
     public function renderOptionsPage() {
         
