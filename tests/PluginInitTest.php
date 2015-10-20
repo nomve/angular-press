@@ -85,7 +85,7 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
             )
         );
 
-        require ANGULAR_PRESS_PLUGIN_DEACTIVATION_FILE;
+        require ANGULAR_PRESS_PLUGIN_FILE;
 
         $this->assertTrue( method_exists($this->pluginInstance, 'pluginDeactivation') );
     }
