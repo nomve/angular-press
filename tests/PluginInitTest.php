@@ -59,7 +59,7 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
             array(
                 'times' => 1,
                 'args' => array(
-                    \AngularPress\AdminPage::OPTIONS_FIELD,
+                    \AngularPress\Options::OPTIONS_FIELD,
                     ''
                 ),
             )
@@ -99,7 +99,7 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
             array(
                 'times' => 1,
                 'args' => array(
-                    \AngularPress\AdminPage::OPTIONS_FIELD
+                    \AngularPress\Options::OPTIONS_FIELD
                 ),
             )
         );

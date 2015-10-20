@@ -4,7 +4,7 @@
 namespace AngularPress\Tests;
 
 
-class AdminTest extends \WP_Mock\Tools\TestCase {
+class OptionsTest extends \WP_Mock\Tools\TestCase {
 
     public function setUp() {
         parent::setUp();
@@ -18,20 +18,20 @@ class AdminTest extends \WP_Mock\Tools\TestCase {
      */
     public function testShowsCurrentlySavedOptions() {
         
-        $admin = new \AngularPress\AdminPage();
+        $options = new \AngularPress\Options();
 
         \WP_Mock::wpFunction(
             'get_option',
             array(
                 'times' => 1,
                 'args' => array(
-                    $admin->getOptionsField()
+                    $options->getOptionsField()
                 ),
                 'return' => 1
             )
         );
         
-        $this->assertTrue( $admin->getGalleryTemplate() === 1 );
+        $this->assertTrue( $options->getGalleryTemplate() === 1 );
     }
     
 }

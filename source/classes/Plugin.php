@@ -12,22 +12,25 @@ class Plugin {
     const CONTENT_FIELD = 'content';
 
     private $shortcodeParser;
+    private $adminPage;
+    private $options;
 
     function __construct() {
         
         $this->shortcodeParser = new ShortcodeParser();
         $this->adminPage = new AdminPage();
+        $this->options = new Options();
         
         add_action( 'rest_api_init', array($this, 'registerPostContentField') );
         add_action( 'admin_menu', array($this, 'addSubmenuPage') );
     }
 
     public function pluginActivation() {
-        add_option( $this->adminPage->getOptionsField(), '' );
+        add_option( $this->options->getOptionsField(), '' );
     }
 
     public function pluginDeactivation() {
-        delete_option( $this->adminPage->getOptionsField() );
+        delete_option( $this->options->getOptionsField() );
     }
     
     /**
