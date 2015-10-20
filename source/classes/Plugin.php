@@ -10,6 +10,7 @@ class Plugin {
     const SLUG = 'angular-press';
     const REQUIRED_PERMISSIONS = 'manage_options';
     const CONTENT_FIELD = 'content';
+    const OPTIONS_FIELD = 'angular_press_options';
 
     private $shortcodeParser;
 
@@ -23,11 +24,11 @@ class Plugin {
     }
 
     public function pluginActivation() {
-        // doesn't save settings at the moment
+        add_option( self::OPTIONS_FIELD, '' );
     }
 
     public function pluginDeactivation() {
-        // no settings atm
+        delete_option( self::OPTIONS_FIELD );
     }
     
     /**

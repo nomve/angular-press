@@ -5,13 +5,17 @@ namespace AngularPress\Tests;
 
 
 class PluginInitTest extends \WP_Mock\Tools\TestCase {
+    
+    private $pluginInstance;
 
     public function setUp() {
         parent::setUp();
+        $this->pluginInstance = new \AngularPress\Plugin();
     }
 
     public function tearDown() {
         parent::tearDown();
+        unset($this->pluginInstance);
     }
 
 
@@ -24,8 +28,6 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
      * tests if the plugin file uses the appropriate install hook
      */
     function testPluginActivation() {
-        
-        $pluginInstance = new \AngularPress\Plugin;
 
         \WP_Mock::wpFunction(
             'register_activation_hook',
@@ -34,42 +36,74 @@ class PluginInitTest extends \WP_Mock\Tools\TestCase {
                 'args' => array(
                     ANGULAR_PRESS_PLUGIN_FILE,
                     array(
-                        $pluginInstance,
+                        $this->pluginInstance,
                         'pluginActivation'
                     )
                 ),
             )
         );
 
+        \WP_Mock::wpFunction( 'register_deactivation_hook' );
+
         require_once ANGULAR_PRESS_PLUGIN_FILE;
 
-        $this->assertTrue( method_exists($pluginInstance, 'pluginActivation') );
+        $this->assertTrue( method_exists($this->pluginInstance, 'pluginActivation') );
     }
+    /**
+     * 
+     */
+    public function testRegistersOptionsFields() {
 
+        \WP_Mock::wpFunction(
+            'add_option',
+            array(
+                'times' => 1,
+                'args' => array(
+                    \AngularPress\Plugin::OPTIONS_FIELD,
+                    ''
+                ),
+            )
+        );
+        $this->pluginInstance->pluginActivation();
+    }
     /**
      * tests if the plugin file uses the appropriate uninstall hook
      */
     function testPluginDeactivation() {
-        
-        $pluginInstance = new \AngularPress\Plugin;
 
         \WP_Mock::wpFunction(
             'register_deactivation_hook',
             array(
                 'times' => 1,
                 'args' => array(
-                    ANGULAR_PRESS_PLUGIN_DEACTIVATION_FILE,
+                    ANGULAR_PRESS_PLUGIN_FILE,
                     array(
-                        $pluginInstance,
+                        $this->pluginInstance,
                         'pluginDeactivation'
                     )
                 ),
             )
         );
 
-        require_once ANGULAR_PRESS_PLUGIN_DEACTIVATION_FILE;
+        require ANGULAR_PRESS_PLUGIN_DEACTIVATION_FILE;
 
-        $this->assertTrue( method_exists($pluginInstance, 'pluginDeactivation') );
+        $this->assertTrue( method_exists($this->pluginInstance, 'pluginDeactivation') );
+    }
+    /**
+     * 
+     */
+    public function testUnegistersOptionsFields() {
+
+        \WP_Mock::wpFunction(
+            'delete_option',
+            array(
+                'times' => 1,
+                'args' => array(
+                    \AngularPress\Plugin::OPTIONS_FIELD
+                ),
+            )
+        );
+        $this->pluginInstance->pluginDeactivation();
     }
 
 }
