@@ -6,6 +6,9 @@ namespace AngularPress;
 
 class Plugin {
     
+    const NAME = 'Angular-Press';
+    const SLUG = 'angular-press';
+    const REQUIRED_PERMISSIONS = 'manage_options';
     const CONTENT_FIELD = 'content';
 
     private $shortcodeParser;
@@ -13,8 +16,10 @@ class Plugin {
     function __construct() {
         
         $this->shortcodeParser = new ShortcodeParser();
+        $this->admin = new Admin();
         
         add_action( 'rest_api_init', array($this, 'registerPostContentField') );
+        add_action( 'admin_menu', array($this, 'addSubmenuPage') );
     }
 
     public function pluginActivation() {
@@ -65,6 +70,23 @@ class Plugin {
     private function adjustContentForAngular() {
 
         $this->shortcodeParser->addFilters();
+    }
+    /**
+     * 
+     */
+    public function addSubmenuPage() {
+        
+        add_submenu_page( 
+            'options-general.php',
+            sprintf('%s Settings', self::NAME),
+            self::NAME,
+            self::REQUIRED_PERMISSIONS,
+            self::SLUG,
+            array(
+                $this->admin,
+                'renderOptionsPage'
+            )
+        );
     }
 
 }

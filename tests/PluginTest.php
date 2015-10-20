@@ -141,4 +141,31 @@ class PluginTest extends \WP_Mock\Tools\TestCase {
             $this->assertTrue( empty($result['angular']) );
         }
     }
+    /**
+     * 
+     */
+    public function testRegisteringCallbackToAddAdminSubpage() {
+        
+        \WP_Mock::expectActionAdded( 'admin_menu', array(
+                new \AngularPress\Plugin,
+                'addSubmenuPage'
+            )
+        );
+        
+        new \AngularPress\Plugin();
+    }
+    /**
+     * 
+     */
+    public function testPluginAddsSubpageToOptionsPage() {
+
+        \WP_Mock::wpFunction(
+            'add_submenu_page',
+            array(
+                'times' => 1
+            )
+        );
+        
+        $this->pluginInstance->addSubmenuPage();
+    }
 }
