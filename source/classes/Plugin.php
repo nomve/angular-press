@@ -90,5 +90,12 @@ class Plugin {
             )
         );
     }
+    /**
+     * 
+     */
+    public function getName() {
+        
+        return self::NAME;
+    }
 
 }

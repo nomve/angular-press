@@ -17,7 +17,7 @@ class Options {
     /**
      * 
      */
-    public function getGalleryTemplate() {
+    public function getAll() {
         return get_option( self::OPTIONS_FIELD );
     }
 }
