@@ -60,12 +60,11 @@ class Plugin {
     
         $post = get_post($object['id']);
         
-        if ( empty($post) )
-            return $object[$field_name];
-
-        $this->adjustContentForAngular();
-
-        $object[$field_name]['angular'] = do_shortcode( $post->post_content );
+        if ( ! empty($post) ) {    
+            
+            $this->adjustContentForAngular();
+            $object[$field_name]['angular'] = do_shortcode( $post->post_content );
+        }
 
         return $object[$field_name];    
     }
