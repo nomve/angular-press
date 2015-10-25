@@ -1,5 +1,7 @@
 # angular-press
 
+![build status](https://travis-ci.org/nomve/angular-press.svg)
+
 A Wordpress Plugin that builds on the [WP REST API](http://v2.wp-api.org/) Plugin
 in order to make it easier for Wordpress shortcodes to work with an Angular style SPA.
 
