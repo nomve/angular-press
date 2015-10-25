@@ -64,6 +64,10 @@ class ShortcodeParserTest extends \WP_Mock\Tools\TestCase {
         $this->assertTrue( empty($attributes['link']) );
         
         $this->setupWpGetProperAttachmentImage();
+
+        \WP_Mock::wpFunction(
+            'get_option'
+        );
         
         $result = $this->shortcodeParser->galleryCallback(null, $attributes);
 

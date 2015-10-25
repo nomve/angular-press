@@ -32,6 +32,6 @@ class Options {
      * 
      */
     public function getAll() {
-        return get_option( self::OPTIONS_FIELD );
+        return \get_option( self::OPTIONS_FIELD );
     }
 }

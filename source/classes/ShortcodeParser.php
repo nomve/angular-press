@@ -4,6 +4,15 @@ namespace AngularPress;
 
 class ShortcodeParser {
 
+    private $options;
+
+    public function __construct($options = '') {
+
+        if ( empty($options) )
+            $options = new Options();
+
+        $this->options = $options;
+    }
     /**
      *
      */
@@ -28,6 +37,12 @@ class ShortcodeParser {
             return new Data\Image($id, $size, $link);
         }, $ids);
 
-        return "<gallery images='" . json_encode($imageObjects) . "'></gallery>";
+        $templates = $this->options->getAll();
+        if ( empty($templates['gallery']) )
+            $templates['gallery'] = "<gallery images='%s'></gallery>";
+
+        $galleryTemplate = $templates['gallery'];
+
+        return sprintf( $galleryTemplate, json_encode($imageObjects) );
     }
 }
