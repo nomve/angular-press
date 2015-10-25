@@ -7,7 +7,21 @@ namespace AngularPress;
 class Options {
     
     const OPTIONS_FIELD = 'angular_press_options';
-    
+
+    private $shortcodes;
+
+    public function __construct() {
+
+        $this->shortcodes = array(
+            'gallery'
+        );
+    }
+    /*
+     *
+     */
+    public function getShortcodes() {
+        return $this->shortcodes;
+    }
     /**
      * 
      */

@@ -10,7 +10,6 @@ class AdminPage {
     private $options;
     
     const SETTING_GROUP = 'angular-press-settings';
-    const SETTING_SHORTCODE_FIELD = 'shortcode';
     
     public function __construct( $renderer = '' ) {
         
@@ -28,7 +27,7 @@ class AdminPage {
      * 
      */
     public function optionsPageInit() {
-        register_setting( self::SETTING_GROUP, self::SETTING_SHORTCODE_FIELD );
+        register_setting( self::SETTING_GROUP, $this->options->getOptionsField() );
     }
     /**
      * 
@@ -41,22 +40,58 @@ class AdminPage {
             array(
                 'options' => $this->options->getAll(),
                 'title' => 'Angular-Press Settings',
-                'settings_fields' => $this->getSettingsFields()
+                'settings_fields' => $this->getSettingsFields(),
+                'shortcode_field_name' => $this->options->getOptionsField(),
+                'shortcodes' => $this->getShortcodes(),
+                'submit_button' => $this->getSubmitButton()
             )
         );
     }
     /**
-     * 
+     *
+     */
+    private function getShortcodes() {
+
+        $availableShortcodes = $this->options->getShortcodes();
+        $currentValues = $this->options->getAll();
+        $shortcodes = array();
+
+        if ( empty($currentValues[$currentShortcode]) )
+            $currentValues[$currentShortcode] = '';
+
+        foreach ( $availableShortcodes as $currentShortcode ) {
+            $shortcodes[] = array(
+                'name' => $currentShortcode,
+                'value' => $currentValues[$currentShortcode]
+            );
+        }
+
+        return $shortcodes;
+    }
+    /**
+     *
      */
     private function getSettingsFields() {
-        
+
         ob_start();
-        
+
         settings_fields( self::SETTING_GROUP );
         $settings_fields = ob_get_contents();
-        
+
         ob_end_clean();
-        
         return $settings_fields;
+    }
+    /**
+     *
+     */
+    private function getSubmitButton() {
+
+        ob_start();
+
+        submit_button();
+        $submit_button = ob_get_contents();
+
+        ob_end_clean();
+        return $submit_button;
     }
 }

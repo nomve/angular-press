@@ -2,5 +2,24 @@
     <h1>{{title}}</h1>
     <form method="post" action="options.php"> 
         {{{settings_fields}}}
+        <table class="form-table">
+            <tr>
+                <th scope="row"><label for="{{shortcode_field_name}}">Shortcode Transform for: </label></th>
+                <td>
+                    <select id="{{shortcode_field_name}}" class="postform">
+        	            <option class="level-0" value="gallery" selected="selected">Gallery</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {{#shortcodes}}
+                        {{this}}
+                    <textarea name="{{shortcode_field_name}}[{{name}}]" class="large-text code" rows="4">{{value}}</textarea>
+                    {{/shortcodes}}
+                </td>
+            </tr>
+        </table>
+        {{{submit_button}}}
     </form>
 </div>
